@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url('../images/pokeball2.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: black;
+}
+
+.conteneur_bouton {
+    height: 20vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.fond_bouton {
+    width: 20%;
+    position: relative;
+    background: linear-gradient(90deg,rgb(255, 208, 0),rgb(255, 115, 0),rgb(255, 208, 0));
+    border-radius: 100px;
+}
+
+button {
+    width: 95%;
+    font-size: 5vh;
+    padding: 0.4%;
+    margin: 2%;
+    border-radius: 100px;
+    background: white;
+    border-style: none;
+}
+
+.conteneur_pokemon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.conteneur_pokemon .carte_pokemon {
+    margin-left: 10%;
+    width: 50%;
+    height: 80vh;
+    margin-left: -10%;
+    border-radius: 20px;
+}
+
+.conteneur_1 {
+    width:60%;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1%;
+    border-radius: 20px;
+}
+
+.conteneur_2 {
+    display: flex;
+    justify-content: center;
+}
+
+.info p{
+    color: white;
+    margin-top: 1%;
+    margin-left: 10%;
+    font-size: 3vh;
+}
+
+.sprites {
+    margin-left: 10%;
+    width: 70%;
+}
