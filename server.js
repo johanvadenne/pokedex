@@ -2,8 +2,8 @@
  
 Serveur Backend Pokedex*/
 
-console.log("Hellow World!");
 const fs= require('fs');
+const cors = require('cors');
 
 // Définir l'emplacement des fichiers bases de données
 
@@ -21,6 +21,9 @@ const port = 5001;
 const express = require('express');
 
 const app = express();
+
+// Utilisez "cors" pour gérer les en-têtes CORS.
+app.use(cors());
 
 // lancer le serveur et attendre
 app.listen(port, '127.0.0.1',
@@ -44,7 +47,7 @@ typePok
 );
 
 // fonction
-function findAllPokemon(request, responce)
+function findAllPokemon(request, reponse)
 {
    // Lecture du fichier
    let data = fs.readFileSync(POKEDEX);
@@ -54,7 +57,7 @@ function findAllPokemon(request, responce)
 
    // Renvoie tout le json interprété
 
-   responce.send(pokedex);
+   reponse.send(pokedex);
 }
 
 function findHazardPokemon(request, response) {

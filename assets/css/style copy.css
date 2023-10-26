@@ -36,19 +36,40 @@ button {
     border-style: none;
 }
 
-.container {
+.conteneur_pokemon {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.image {
-    flex: 0 0 33.33%; /* 3 colonnes (33.33% chacune) */
-    box-sizing: border-box;
+.conteneur_pokemon .carte_pokemon {
+    margin-left: 10%;
+    width: 50%;
+    height: 80vh;
+    margin-left: -10%;
+    border-radius: 20px;
 }
 
-.image img {
-    width: 95%;
-    margin-bottom: 5%;
-    height: auto;
-    border-radius: 30px;
+.conteneur_1 {
+    width:60%;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1%;
+    border-radius: 20px;
+}
+
+.conteneur_2 {
+    display: flex;
+    justify-content: center;
+}
+
+.info p{
+    color: white;
+    margin-top: 1%;
+    margin-left: 10%;
+    font-size: 3vh;
+}
+
+.sprites {
+    margin-left: 10%;
+    width: 70%;
 }
