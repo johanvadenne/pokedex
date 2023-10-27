@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <title>Galerie d'Images</title>
     <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/cardPokemon.css" rel="stylesheet">
 </head>
 <body>
+    <img src="image-de-remplacement.jpg" id="placeholder" alt="Image de remplacement">
+    <section class="conteneur_bouton">
+        <div class="fond_bouton"><button>Afficher tout</button></div>
+        <div class="fond_bouton"><button>Rechercher</button></div>
+        <div class="fond_bouton"><button>Carte aléatoire</button></div>
+    </section>  
     <h1>Galerie d'Images</h1>
-    <div class="image-container container" id="contenaireImage">
+    <div class="container" id="contenaireImage">
     </div>
+    <style class="hover"></style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./assets/js/carte_pokemon.js"></script>
     <script src="./assets/js/script.js"></script>
-    <script type="text/javascript" src="./assets/js/vanilla-tilt.js"></script>
 </body>
 </html>
