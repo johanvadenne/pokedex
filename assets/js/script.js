@@ -5,7 +5,7 @@ const bodyTable = document.getElementById("body_table");
 const searchBarrePokemon = document.getElementById("search_barre_pokemon");
 const popupSearchPokemon = document.getElementById("popup_search_pokemon");
 
-// FR: fait une requette GET à une API
+// FR: effectue une requette GET à une API
 // EN: makes a GET request to an API
 function appelleAPI(url) {
   return fetch(url)
@@ -21,34 +21,60 @@ function appelleAPI(url) {
     });
 }
 
+// FR: affiche toutes les cartes pokémon
+// EN: displays all pokemon cards
 function viewAllPokemon() {
+  // FR: Vérifie si des éléments sont déjà enregistrés
+  // EN: Checks if elements are already registered
   if (elementEnreg != "") {
-    reafficheTout()
+    // FR: Si des éléments sont enregistrés, réaffiche-les
+    // EN: If items are saved, redisplay them
+    reafficheTout();
   } else {
+    // FR: Si aucun élément n'est enregistré, effectue une requête API
+    // EN: If no elements are registered, perform an API request
     appelleAPI("http://127.0.0.1:5001/")
-      .then(donneePokemeon => {
-        jsonEnreg = donneePokemeon;
+      .then(pokemonData => {
+        
+        // FR: Les données des Pokémon sont stockées dans pokemonData
+        // EN: Pokémon data are stored in pokemonData
+        jsonEnreg = pokemonData;
         element = "";
-        for (let index = 0; index < donneePokemeon.length; index++) {
-          strid = "" + donneePokemeon[index].id + "";
-          nom = donneePokemeon[index].name.french;
+
+        // FR: Parcours des données de chaque Pokémon
+        // EN: Data browsing for each Pokémon
+        for (let index = 0; index < pokemonData.length; index++) {
+          strid = "" + pokemonData[index].id + "";
+          name = pokemonData[index].name.french;
           num = strid.padStart(3, '0');
+
+          // FR: les 9 premières cartes sont affichées, les autres sont cachés pour économiser de la bande passante
+          // EN: the first 9 cards are displayed, the others are hidden to save bandwidth
           if (index <= 8) {
-            element += "<div onclick=\"affichePokemonNom('" + nom + "')\" class=\"image card pika\"><img id=\"" + num + "\" src=\"./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg\"></div>";
-          }
-          else {
-            element += "<div onclick=\"affichePokemonNom('" + nom + "')\" class=\"image card pika\"><img id=\"" + num + "\" src=\"./assets/images/pokemon_card_back.jpg\" data-src=\"./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg\"></div>";
+            element += "<div onclick=\"displayPokemonName('" + name + "')\" class=\"image card pika\"><img id=\"" + num + "\" src=\"./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg\"></div>";
+          } else {
+            element += "<div onclick=\"displayPokemonName('" + name + "')\" class=\"image card pika\"><img id=\"" + num + "\" src=\"./assets/images/pokemon_card_back.jpg\" data-src=\"./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg\"></div>";
           }
         }
+
+        // FR: affiche toutes les cartes pokémon
+        // EN: displays all pokémon cards
         contenaireImage.innerHTML = element;
+
+        // FR: Enregistre le HTML généré dans la variable elementEnreg
+        // EN: Stores the generated HTML in the elementEnreg variable
         elementEnreg = element;
+
+        // FR: Appelle la fonction pour animer les cartes
+        // EN: Calls up the function for animating cards
         animationCard();
-      }
-      )
+      });
   }
 }
 
-// Fonction pour charger les images lorsque l'utilisateur fait défiler
+
+// FR: Fonction pour charger les images lorsque l'utilisateur fait scroll
+// EN: Function to load images when user scrolls
 function lazyLoadImages() {
   const images = document.querySelectorAll("img[data-src]");
 
@@ -57,18 +83,19 @@ function lazyLoadImages() {
     const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
 
     if (rect.top >= 0 && rect.top <= viewHeight) {
-      // L'image est visible, chargez-la
       image.src = image.getAttribute("data-src");
       image.removeAttribute("data-src");
-      image.onload = hidePlaceholder; // Cacher l'image de remplacement lorsque l'image est chargée
+      image.onload = hidePlaceholder;
     }
   });
 }
 
-// Attachez un gestionnaire d'événement à l'événement "scroll" pour déclencher le chargement des images lorsque l'utilisateur fait défiler
+// FR: Attachez un gestionnaire d'événement à l'événement "scroll" pour déclencher le chargement des images lorsque l'utilisateur fait défiler
+// EN: Attach an event handler to the "scroll" event to trigger image loading when the user scrolls
 window.addEventListener("scroll", lazyLoadImages);
 
-// Appelez la fonction une fois au chargement initial de la page pour charger les images visibles
+// FR: Appelez la fonction une fois au chargement initial de la page pour charger les images visibles
+// EN: Call the function once on initial page load to load visible images
 window.addEventListener("load", lazyLoadImages);
 
 
@@ -138,37 +165,47 @@ function animationCard() {
     });
 }
 
+// FR: affiche un pokémon aléatoire
+// EN: display random pokemon
 function randomPokemon() {
   appelleAPI("http://127.0.0.1:5001/hazard")
-    .then(donneesPokemon => affichePokemon(donneesPokemon))
+    .then(pokemonData => displayPokemon(pokemonData))
 }
 
-function affichePokemonNom(nom, recherche = false) {
-  appelleAPI("http://127.0.0.1:5001/pokemon?pokemon=" + nom + "")
-    .then(donneesPokemon => {
+// FR: affiche un pokémon par nom
+// EN: display pokemon by name
+function displayPokemonName(name, recherche = false) {
+  appelleAPI("http://127.0.0.1:5001/pokemon?pokemon=" + name + "")
+    .then(pokemonData => {
       if (recherche) {
         popupSearchPokemon.style.display = "none";
-        affichePokemon(donneesPokemon, false);
+        displayPokemon(pokemonData, false);
       } else {
-        affichePokemon(donneesPokemon, true);
+        displayPokemon(pokemonData, true);
       }
     }
       )
 
 }
 
-function affichePokemon(donneePokemeon, returnAll = false) {
-  const name = donneePokemeon.name.french;
-  const type = donneePokemeon.type.join("/");
-  const HP = donneePokemeon.base.HP;
-  const Attack = donneePokemeon.base.Attack;
-  const Defense = donneePokemeon.base.Defense;
-  const SpAttack = donneePokemeon.base["Sp. Attack"];
-  const SpDefense = donneePokemeon.base["Sp. Defense"];
-  const Speed = donneePokemeon.base.Speed;
+// FR: affiche un pokémon
+// EN: display pokemon
+function displayPokemon(pokemonData, returnAll = false) {
+
+  // init
+  const name = pokemonData.name.french;
+  const type = pokemonData.type.join("/");
+  const HP = pokemonData.base.HP;
+  const Attack = pokemonData.base.Attack;
+  const Defense = pokemonData.base.Defense;
+  const SpAttack = pokemonData.base["Sp. Attack"];
+  const SpDefense = pokemonData.base["Sp. Defense"];
+  const Speed = pokemonData.base.Speed;
   element = "";
-  strid = "" + donneePokemeon.id + "";
+  strid = "" + pokemonData.id + "";
   num = strid.padStart(3, '0');
+
+
   if (returnAll) {
     element += "<button onclick=\"reafficheTout()\" id=\"returnAll\">retour</button>"
   }
@@ -201,24 +238,30 @@ function affichePokemon(donneePokemeon, returnAll = false) {
   animationCard();
 }
 
+// FR: réaffiche les pokémon
+// EN: redisplay the pokemon
 function reafficheTout() {
   contenaireImage.innerHTML = elementEnreg;
 }
 
+// FR: à chaque modification de saisie, cherche les pokémon correspondant à la recherche de l'utilisateur
+// EN: each time you modify an entry, searches for pokémon matching the user's query
 searchBarrePokemon.addEventListener('input', function() {
     pokemonRechercher = searchBarrePokemon.value;
     if (jsonEnreg != null) {
       recherchePokemon(pokemonRechercher);
     } else {
       appelleAPI("http://127.0.0.1:5001/")
-      .then(donneePokemeon => {
-        jsonEnreg = donneePokemeon;
+      .then(pokemonData => {
+        jsonEnreg = pokemonData;
         recherchePokemon(pokemonRechercher);
       }
   )
     }
 });
 
+// FR: cherche les pokémon correspondant à la recherche de l'utilisateur
+// EN: searches for pokémon matching the user's query
 function recherchePokemon(pokemonRechercher) {
   var lignes = "";
 
@@ -237,7 +280,7 @@ function recherchePokemon(pokemonRechercher) {
     ) {
       strid = "" + jsonEnreg[i].id + "";
       num = strid.padStart(3, '0');
-      lignes += "<tr class=\"ligne\" onclick=\"affichePokemonNom('"+jsonEnreg[i].name.french+"', true)\">";
+      lignes += "<tr class=\"ligne\" onclick=\"displayPokemonName('"+jsonEnreg[i].name.french+"', true)\">";
       lignes += "<td>"+num+"</td>";
       lignes += "<td><img class=\"sprites\" src=\"./assets/POKEDEX/FILES/sprites/" + num + "MS.png\"></td>";
       lignes += "<td>"+jsonEnreg[i].name.french+"</td>";
@@ -248,6 +291,8 @@ function recherchePokemon(pokemonRechercher) {
   bodyTable.innerHTML = lignes;
 }
 
+// FR: affiche popup
+// EN: display popup
 function viewPopup() {
   popupSearchPokemon.style.display = "block";
 }
