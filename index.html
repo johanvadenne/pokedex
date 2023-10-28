@@ -17,13 +17,13 @@
 <!-- BODY -->
 <body>
     
-    <!-- BUTTTON -->
+    <!-- BUTTON -->
     <section class="container_button">
-        <div class="background_button" onclick="afficheToutPokemon()"><button>Afficher tout</button></div>
-        <div class="background_button" onclick="affichePopup()"><button>Rechercher</button></div>
-        <div class="background_button"><button onclick="aleatoirePokemon()">aléatoire</button></div>
+        <div class="background_button" onclick="viewAllPokemon()"><button>Afficher tout</button></div>
+        <div class="background_button" onclick="viewPopup()"><button>Rechercher</button></div>
+        <div class="background_button"><button onclick="randomPokemon()">aléatoire</button></div>
     </section>
-    <!-- BUTTTON -->
+    <!-- BUTTON -->
 
     <!-- CONTAINER CARD POKEMON -->
     <section class="container_pokemon" id="contenaireImage">
@@ -31,18 +31,18 @@
     <!-- CONTAINER CARD POKEMON -->
 
     <!-- POPUP SEARCH POKEMON -->
-    <section class="popup" id="popup_recherche">
-        <label class="labelle_barre_de_recherche" for="barre_de_recherche">Pokémon: </label>
-        <input class="barre_de_recherche" id="barre_de_recherche_pokemon" name="barre_de_recherche" type="text">
+    <section class="popup" id="popup_search_pokemon">
+        <label class="labelle_search_barre" for="search_barre">Pokémon: </label>
+        <input class="search_barre" id="search_barre_pokemon" name="search_barre" type="text">
         <img class="pokeball_icone1" src="./assets/images/pokeball-icone.png">
-        <table class="table_de_recherche">
+        <table class="search_table">
             <thead>
                 <th>Num</th>
                 <th>Img</th>
                 <th>Nom </th>
             </thead>
 
-            <tbody id="corps_table">
+            <tbody id="body_table">
 
             </tbody>
         </table>

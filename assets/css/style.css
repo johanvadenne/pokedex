@@ -173,43 +173,43 @@ p {
     overflow: hidden;
 }
 
-.labelle_barre_de_recherche, .barre_de_recherche {
+.labelle_search_barre, .search_barre {
     display: block;
     margin: 0 auto;
 }
 
-.table_de_recherche {
+.search_table {
     margin: 20px auto;
     text-align: center;
 }
 
-.labelle_barre_de_recherche {
+.labelle_search_barre {
     font-size: 3vh;
 }
 
-.barre_de_recherche {
+.search_barre {
     height: 3vh;
     font-size: 3vh;
 }
 
-.table_de_recherche {
+.search_table {
     border-collapse:collapse;
     width: auto;
 }
 
-.table_de_recherche .ligne {
+.search_table .ligne {
     cursor: pointer;
 }
 
-.table_de_recherche .ligne:hover {
+.search_table .ligne:hover {
     background-color: rgba(0, 195, 255, 0.247);
 }
 
-.table_de_recherche td {
+.search_table td {
     border-bottom: solid 1px black;
 }
 
-.table_de_recherche img {
+.search_table img {
     width: 60px;
     height: 60px;
 }

@@ -1,9 +1,9 @@
 var elementEnreg = "";
 var jsonEnreg = null;
 const contenaireImage = document.getElementById("contenaireImage");
-const corpsTable = document.getElementById("corps_table");
-const barreDeRecherchePokemon = document.getElementById("barre_de_recherche_pokemon");
-const popupRecherche = document.getElementById("popup_recherche");
+const bodyTable = document.getElementById("body_table");
+const searchBarrePokemon = document.getElementById("search_barre_pokemon");
+const popupSearchPokemon = document.getElementById("popup_search_pokemon");
 
 // FR: fait une requette GET à une API
 // EN: makes a GET request to an API
@@ -21,7 +21,7 @@ function appelleAPI(url) {
     });
 }
 
-function afficheToutPokemon() {
+function viewAllPokemon() {
   if (elementEnreg != "") {
     reafficheTout()
   } else {
@@ -138,7 +138,7 @@ function animationCard() {
     });
 }
 
-function aleatoirePokemon() {
+function randomPokemon() {
   appelleAPI("http://127.0.0.1:5001/hazard")
     .then(donneesPokemon => affichePokemon(donneesPokemon))
 }
@@ -147,7 +147,7 @@ function affichePokemonNom(nom, recherche = false) {
   appelleAPI("http://127.0.0.1:5001/pokemon?pokemon=" + nom + "")
     .then(donneesPokemon => {
       if (recherche) {
-        popupRecherche.style.display = "none";
+        popupSearchPokemon.style.display = "none";
         affichePokemon(donneesPokemon, false);
       } else {
         affichePokemon(donneesPokemon, true);
@@ -170,7 +170,7 @@ function affichePokemon(donneePokemeon, returnAll = false) {
   strid = "" + donneePokemeon.id + "";
   num = strid.padStart(3, '0');
   if (returnAll) {
-    element += "<button onclick=\"reafficheTout()\" id=\"returnAll\">returnAll</button>"
+    element += "<button onclick=\"reafficheTout()\" id=\"returnAll\">retour</button>"
   }
   element += "<div class=\"present_pokemon\">";
   element += "    <div class=\"container_card\">";
@@ -205,8 +205,8 @@ function reafficheTout() {
   contenaireImage.innerHTML = elementEnreg;
 }
 
-barreDeRecherchePokemon.addEventListener('input', function() {
-    pokemonRechercher = barreDeRecherchePokemon.value;
+searchBarrePokemon.addEventListener('input', function() {
+    pokemonRechercher = searchBarrePokemon.value;
     if (jsonEnreg != null) {
       recherchePokemon(pokemonRechercher);
     } else {
@@ -245,9 +245,9 @@ function recherchePokemon(pokemonRechercher) {
     }
   }
 
-  corpsTable.innerHTML = lignes;
+  bodyTable.innerHTML = lignes;
 }
 
-function affichePopup() {
-  popupRecherche.style.display = "block";
+function viewPopup() {
+  popupSearchPokemon.style.display = "block";
 }
