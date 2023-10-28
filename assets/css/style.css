@@ -73,7 +73,6 @@ body {
 /* button */
 button {
     width: 95%;
-    font-size: 5vh;
     padding: 0.4%;
     margin: 2%;
     border-radius: 100px;
@@ -234,5 +233,27 @@ p {
 
 /* popup img */
 .pokeball_icone2 {
-    right: 10%; 
+    right: 7%; 
+}
+
+
+@media screen and (min-width: 1400px) {
+    /* button */
+    button {
+        font-size: 4vh;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    /* button */
+    button {
+        font-size: 3vh;
+    }
+}
+
+@media screen and (max-width: 950) {
+    /* button */
+    button {
+        font-size: 2vh;
+    }
 }
