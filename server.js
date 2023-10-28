@@ -1,102 +1,139 @@
-/** 
- 
-Serveur Backend Pokedex*/
+/* Serveur Backend Pokedex */
 
-const fs= require('fs');
+
+// init
+const fs = require('fs');
 const cors = require('cors');
-
-// Définir l'emplacement des fichiers bases de données
-
-const POKEDEX = "./assets/POKEDEX/DATA/pokedex.json";
-
-// Définir l'emplacement des images
-
-const IMAGE_POKEMON = "./assets/POKEDEX/FILES/images";
-
-// Définir un port 
-
-const port = 5001;
-
-// lancer un serveur express
 const express = require('express');
-
 const app = express();
 
-// Utilisez "cors" pour gérer les en-têtes CORS.
+// FR: Définir l'emplacement des fichiers bases de données
+// EN: Define the location of database files
+const POKEDEX = "./assets/POKEDEX/DATA/pokedex.json";
+
+// FR: Définir un port 
+// EN: Define a port 
+const port = 5001;
+
+
+// FR: Utilisez "cors" pour gérer les en-têtes CORS.
+// EN: Use "cors" to manage CORS headers.
 app.use(cors());
 
-// lancer le serveur et attendre
+// FR: lancer le serveur et attendre
+// EN: start the server and wait
 app.listen(port, '127.0.0.1',
-    ()=>{
+    () => {
         console.log('Server Pokedex is listening on ' + port);
     }
 );
 
-// Crée la route qui renvoie tout
+// FR: création des routes
+// EN: creating roads
+app.get('/',findAllPokemon); // return all pokemon
+app.get('/hazard',findHazardPokemon); // return a random pokemon
+app.get('/pokemon', findPokemon); // return one pokemon
 
-app.get('/',
-    findAllPokemon
-);
 
-app.get('/hazard',
-findHazardPokemon
-);
+// FR: retourner tous les pokémon
+// EN: return all pokemon
+function findAllPokemon(request, reponse) {
+    // FR: Lecture du fichier
+    // EN: Read file
+    let data = fs.readFileSync(POKEDEX);
 
-app.get('/type',
-typePok
-);
+    let pokedex = JSON.parse(data);
 
-// fonction
-function findAllPokemon(request, reponse)
-{
-   // Lecture du fichier
-   let data = fs.readFileSync(POKEDEX);
-
-   // Analyse du JSON
-   let pokedex = JSON.parse(data);
-
-   // Renvoie tout le json interprété
-
-   reponse.send(pokedex);
+    // FR: Renvoie tout le json interprété
+    // EN: Returns all interpreted json
+    reponse.send(pokedex);
 }
 
-function findHazardPokemon(request, response) {
+// FR: retourne un pokémon aléatoire
+// EN: return a random pokemon
+function findHazardPokemon(request, reponse) {
 
-   // Lecture du fichier
-   let data = fs.readFileSync(POKEDEX);
+    // FR: Lecture du fichier
+    // EN: Read file
+    let data = fs.readFileSync(POKEDEX);
 
-   // Analyse du JSON
-   let pokedex = JSON.parse(data);
+    let pokedex = JSON.parse(data);
 
-   let x=0;
+    // FR: choisis un pokémon aléatoire
+    // EN: choose a random pokémon
+    let id = 0;
+    id = Math.floor(Math.random() * pokedex.length) + 1;
 
-   x = Math.floor(Math.random() * pokedex.length) + 1;
-
-   let lienImage = ("0"*(3-String(x)))+x;
-
-
-   // Renvoie tout le jso0n interprété
-   // response.send(pokedex[x]);
-   response.send(IMAGE_POKEMON+"/"+lienImage+".png");
+    // FR: Renvoie tout le json interprété
+    // EN: Returns all interpreted json
+    reponse.send(pokedex[id]);
 }
 
-function typePok(request, response) {
-    
-   // Lecture du fichier
-   let data = fs.readFileSync(POKEDEX);
+// FR: return un pokémon
+// EN: return one pokemon
+function findPokemon(request, reponse) {
 
-   // Analyse du JSON
-   let pokedex = JSON.parse(data);
-   let reponse = "";
+    // init
+    const pokemon = request.query.pokemon;
+    const id = request.query.id;
+    let pokemonData = null;
 
-   for (let i = 0; i < pokedex.length; i++) {
-    for (let j = 0; j < pokedex[i].type.length; j++) {
-        if (!reponse.includes(pokedex[i].type[j])) {
-            reponse += pokedex[i].type[j]+"<br>";
+    // FR: Lecture du fichier
+    // EN: Read file
+    let data = fs.readFileSync(POKEDEX);
+    let pokedex = JSON.parse(data);
+
+    // FR: si un nom de pokémon est saisie
+    // EN: if a pokémon name is entered
+    if (pokemon) {
+
+        // FR: cherche un pokémon par son nom
+        // EN: search for a pokémon by name
+        for (let i = 0; i < pokedex.length; i++) {
+            if (
+                pokedex[i].name.english == pokemon ||
+                pokedex[i].name.japanese == pokemon ||
+                pokedex[i].name.chinese == pokemon ||
+                pokedex[i].name.french == pokemon
+            ) {
+                pokemonData = pokedex[i];
+                break;
+            }
+        }
+
+        if (pokemonData) {
+            // FR: Renvoie le Pokémon trouvé
+            // EN: Returns the Pokémon founds
+            reponse.send(pokemonData);
+        } else {
+            // not found
+            reponse.send('Aucun Pokémon trouvé avec ce nom.');
+        }
+    } 
+    // FR: si un id de pokémon est saisie
+    // EN: if a pokémon id is entered
+    else if(id) {
+
+        // FR: cherche un pokémon par son id
+        // EN: search for a pokémon by id
+        for (let i = 0; i < pokedex.length; i++) {
+            if ( pokedex[i].id == id) {
+                pokemonData = pokedex[i];
+                break;
+            }
+        }
+
+        if (pokemonData) {
+            // FR: Renvoie le Pokémon trouvé
+            // EN: Returns the Pokémon founds
+            reponse.send(pokemonData);
+        } else {
+            // not found
+            reponse.send('Aucun Pokémon trouvé avec cette id.');
         }
     }
-   }
-
-   // Renvoie tout le json interprété
-   response.send(reponse);
+     else {
+        // erreur
+        reponse.send('Veuillez entrer un champ dans l\'URL en utilisant ?pokemon=nom_du_pokemon ou ?id=id_pokemon.');
+    }
 }
