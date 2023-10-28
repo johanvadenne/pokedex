@@ -1,19 +1,14 @@
 :root {
     --color1: #00e7ff;
     --color2: #ff00e7;
-    --back: url(https://cdn2.bulbagarden.net/upload/1/17/Cardback.jpg);
     --charizard1: #fac;
     --charizard2: #ddccaa;
-    --charizardfront: url(https://assets.codepen.io/13471/charizard-gx.webp);
     --pika1: #54a29e;
     --pika2: #a79d66;
-    --pikafront: url(https://assets.codepen.io/13471/pikachu-gx.webp);
     --eevee1: #efb2fb;
     --eevee2: #acc6f8;
-    --eeveefront: url(https://assets.codepen.io/13471/eevee-gx.webp);
     --mewtwo1: #efb2fb;
     --mewtwo2: #acc6f8;
-    --mewtwofront: url(https://assets.codepen.io/13471/mewtwo-gx.webp);
   }
   .card {
     position: relative;
@@ -25,7 +20,6 @@
     box-shadow: -5px -5px 5px -5px var(--color1), 5px 5px 5px -5px var(--color2), -7px -7px 10px -5px transparent, 7px 7px 10px -5px transparent, 0 0 5px 0px rgba(255, 255, 255, 0), 0 55px 35px -20px rgba(0, 0, 0, 0.5);
     transition: transform 0.5s ease, box-shadow 0.2s ease;
     will-change: transform, filter;
-    background-color: #040712;
     background-image: var(--front);
     background-size: cover;
     background-repeat: no-repeat;
@@ -179,13 +173,6 @@
   }
   .cards .card:nth-child(4), .cards .card:nth-child(4):before, .cards .card:nth-child(4):after {
     animation-delay: 0.75s;
-  }
-  .promo {
-    margin-top: 50px;
-  }
-  .promo img {
-    margin-top: 10px;
-    max-width: 80%;
   }
   @keyframes rubberBand {
     from {
