@@ -1,65 +1,24 @@
 <!DOCTYPE html>
 <html>
-
-<!-- HEAD -->
 <head>
     <meta charset="UTF-8">
     <title>Galerie d'Images</title>
-
-    <!-- CSS -->
-    <link href="assets/css/cardPokemon.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
-    <!-- CSS -->
-
+    <link href="assets/css/cardPokemon.css" rel="stylesheet">
 </head>
-<!-- HEAD -->
-
-<!-- BODY -->
 <body>
-    
-    <!-- BUTTTON -->
-    <section class="container_button">
-        <div class="background_button" onclick="afficheToutPokemon()"><button>Afficher tout</button></div>
-        <div class="background_button" onclick="affichePopup()"><button>Rechercher</button></div>
-        <div class="background_button"><button onclick="aleatoirePokemon()">aléatoire</button></div>
-    </section>
-    <!-- BUTTTON -->
-
-    <!-- CONTAINER CARD POKEMON -->
-    <section class="container_pokemon" id="contenaireImage">
-    </section>
-    <!-- CONTAINER CARD POKEMON -->
-
-    <!-- POPUP SEARCH POKEMON -->
-    <section class="popup" id="popup_recherche">
-        <label class="labelle_barre_de_recherche" for="barre_de_recherche">Pokémon: </label>
-        <input class="barre_de_recherche" id="barre_de_recherche_pokemon" name="barre_de_recherche" type="text">
-        <img class="pokeball_icone1" src="./assets/images/pokeball-icone.png">
-        <table class="table_de_recherche">
-            <thead>
-                <th>Num</th>
-                <th>Img</th>
-                <th>Nom </th>
-            </thead>
-
-            <tbody id="corps_table">
-
-            </tbody>
-        </table>
-        <img class="pokeball_icone2" src="./assets/images/pokeball-icone.png">
-    </section>
-    <!-- POPUP SEARCH POKEMON -->
-
-    <!-- CARD EFFECT -->
+    <img src="image-de-remplacement.jpg" id="placeholder" alt="Image de remplacement">
+    <section class="conteneur_bouton">
+        <div class="fond_bouton"><button>Afficher tout</button></div>
+        <div class="fond_bouton"><button>Rechercher</button></div>
+        <div class="fond_bouton"><button>Carte aléatoire</button></div>
+    </section>  
+    <h1>Galerie d'Images</h1>
+    <div class="container" id="contenaireImage">
+    </div>
     <style class="hover"></style>
-    <!-- CARD EFFECT -->
-
-    <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./assets/js/carte_pokemon.js"></script>
     <script src="./assets/js/script.js"></script>
-    <!-- JS -->
-
 </body>
-<!-- BODY -->
-
 </html>
