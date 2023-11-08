@@ -27,7 +27,9 @@ Bienvenue sur le PokéDex Viewer, une application web simple qui vous permet d'e
 
 4. node .\server.js
 
-5. Ouvrez votre navigateur et accédez à http://127.0.0.1:5001 pour explorer le PokéDex Viewer.
+5. Ouvrez votre navigateur et accédez à http://127.0.0.1:5001 pour l'API explorer le PokéDex Viewer.
+
+6. Ouvrez votre index.html avec votre navigateur pour explorer le PokéDex Viewer.
 
 ## Annexe
 
@@ -72,7 +74,9 @@ Welcome to the PokéDex Viewer, a simple web application that lets you explore t
 
 4. node .\server.js
 
-5. Open your browser and go to http://127.0.0.1:5001 to explore the PokéDex Viewer.
+5. Open your browser and go to http://127.0.0.1:5001 to explore the PokéDex Viewer API.
+
+6. Open index.html with your browser for explore the PokéDex Viewer.
 
 ## Appendix
 
