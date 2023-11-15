@@ -22,7 +22,7 @@ app.use(cors());
 
 // FR: lancer le serveur et attendre
 // EN: start the server and wait
-app.listen(port, '127.0.0.1',
+app.listen(port, '0.0.0.0',
     () => {
         console.log('Server Pokedex is listening on ' + port);
     }
