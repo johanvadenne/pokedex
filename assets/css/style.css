@@ -54,7 +54,7 @@ body {
 
 /* button */
 .background_button:hover {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
 }
 
 /* animate button */
@@ -98,6 +98,7 @@ button {
 }
 
 /* pokemon description */
+
 .image img {
     width: 100%;
     height: 100%;
@@ -174,7 +175,7 @@ p {
 }
 
 /* popup search */
-.labelle_search_barre, .search_barre {
+.labelle_search_barre, .search_barre, .popup_rule_pokemon {
     display: block;
     margin: 0 auto;
 }
@@ -236,6 +237,97 @@ p {
     right: 7%; 
 }
 
+#popup_rule_pokemon .titre, #popup_rule_pokemon .regle {
+    color: black;
+}
+
+#popup_rule_pokemon .regle {
+    position: absolute;
+    top: 35%;
+    left: 20%;
+    width: 100%;
+    text-align: left;
+}
+
+#popup_rule_pokemon .pokeball_icone1 {
+    left: 10%;
+}
+
+#popup_rule_pokemon .pokeball_icone2 {
+    right: -1%; 
+}
+
+.card_arene .vs_vard {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    width: 30%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.card_arene {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.choisir_capacite {
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 25%;
+}
+
+.capacite_liste {
+    list-style: none;
+}
+
+.capacite_liste ul {
+    font-size: 2em;
+    margin-left: 10%;
+    margin-right: 10%;
+    color: white;
+    padding: 2.5%;
+    border-radius: 10px;
+}
+
+.capacite_liste ul:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.capacite.selected {
+    background-color: black;
+}
+
+.capacite.selected:hover {
+    background-color: black;
+}
+
+.choisir_capacite h2  {
+    text-align: center;
+    margin: 5%;
+}
+
+.buttun_rule {
+    position: absolute;
+    bottom: 5%;
+    left: -2%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.coneteneur_buttun_ok {
+    position: relative;
+    bottom: -10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#buttun_ok {
+    width: 30%;
+}
 
 @media screen and (min-width: 1400px) {
     /* button */

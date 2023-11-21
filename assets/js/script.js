@@ -4,6 +4,19 @@ const contenaireImage = document.getElementById("contenaireImage");
 const bodyTable = document.getElementById("body_table");
 const searchBarrePokemon = document.getElementById("search_barre_pokemon");
 const popupSearchPokemon = document.getElementById("popup_search_pokemon");
+const popupRulePokemon = document.getElementById("popup_rule_pokemon");
+var capChoisie;
+var imageChacher;
+var capaciteJoueur = {
+  num : [],
+  type : [],
+  HP : [],
+  Attack : [],
+  Defense : [],
+  SpAttack : [],
+  SpDefense : [],
+  Speed : []
+}
 
 // FR: effectue une requette GET à une API
 // EN: makes a GET request to an API
@@ -35,7 +48,7 @@ function viewAllPokemon() {
     // EN: If no elements are registered, perform an API request
     appelleAPI("http://127.0.0.1:5001/")
       .then(pokemonData => {
-        
+
         // FR: Les données des Pokémon sont stockées dans pokemonData
         // EN: Pokémon data are stored in pokemonData
         jsonEnreg = pokemonData;
@@ -184,7 +197,7 @@ function displayPokemonName(name, recherche = false) {
         displayPokemon(pokemonData, true);
       }
     }
-      )
+    )
 
 }
 
@@ -246,18 +259,18 @@ function reafficheTout() {
 
 // FR: à chaque modification de saisie, cherche les pokémon correspondant à la recherche de l'utilisateur
 // EN: each time you modify an entry, searches for pokémon matching the user's query
-searchBarrePokemon.addEventListener('input', function() {
-    pokemonRechercher = searchBarrePokemon.value;
-    if (jsonEnreg != null) {
-      recherchePokemon(pokemonRechercher);
-    } else {
-      appelleAPI("http://127.0.0.1:5001/")
+searchBarrePokemon.addEventListener('input', function () {
+  pokemonRechercher = searchBarrePokemon.value;
+  if (jsonEnreg != null) {
+    recherchePokemon(pokemonRechercher);
+  } else {
+    appelleAPI("http://127.0.0.1:5001/")
       .then(pokemonData => {
         jsonEnreg = pokemonData;
         recherchePokemon(pokemonRechercher);
       }
-  )
-    }
+      )
+  }
 });
 
 // FR: cherche les pokémon correspondant à la recherche de l'utilisateur
@@ -273,17 +286,17 @@ function recherchePokemon(pokemonRechercher) {
       jsonEnreg[i].name.chinese.includes(pokemonRechercher) ||
       jsonEnreg[i].name.french.includes(pokemonRechercher));
     if (
-        jsonEnreg[i].name.english.includes(pokemonRechercher) ||
-        jsonEnreg[i].name.japanese.includes(pokemonRechercher) ||
-        jsonEnreg[i].name.chinese.includes(pokemonRechercher) ||
-        jsonEnreg[i].name.french.includes(pokemonRechercher)
+      jsonEnreg[i].name.english.includes(pokemonRechercher) ||
+      jsonEnreg[i].name.japanese.includes(pokemonRechercher) ||
+      jsonEnreg[i].name.chinese.includes(pokemonRechercher) ||
+      jsonEnreg[i].name.french.includes(pokemonRechercher)
     ) {
       strid = "" + jsonEnreg[i].id + "";
       num = strid.padStart(3, '0');
-      lignes += "<tr class=\"ligne\" onclick=\"displayPokemonName('"+jsonEnreg[i].name.french+"', true)\">";
-      lignes += "<td>"+num+"</td>";
+      lignes += "<tr class=\"ligne\" onclick=\"displayPokemonName('" + jsonEnreg[i].name.french + "', true)\">";
+      lignes += "<td>" + num + "</td>";
       lignes += "<td><img class=\"sprites\" src=\"./assets/POKEDEX/FILES/sprites/" + num + "MS.png\"></td>";
-      lignes += "<td>"+jsonEnreg[i].name.french+"</td>";
+      lignes += "<td>" + jsonEnreg[i].name.french + "</td>";
       lignes += "</tr>";
     }
   }
@@ -295,4 +308,188 @@ function recherchePokemon(pokemonRechercher) {
 // EN: display popup
 function viewPopup() {
   popupSearchPokemon.style.display = "block";
+}
+
+function rulePokemon(jouer = false) {
+  popupRulePokemon.style.display = "block";
+}
+
+function annulerRegle() {
+  popupRulePokemon.style.display = "none";
+}
+
+
+function playPokemon() {
+
+  appelleAPI("http://127.0.0.1:5001/hazard")
+    .then(pokemonData => {
+
+      const name = pokemonData.name.french;
+      const type = pokemonData.type.join("/");
+      const HP = pokemonData.base.HP;
+      const Attack = pokemonData.base.Attack;
+      const Defense = pokemonData.base.Defense;
+      const SpAttack = pokemonData.base["Sp. Attack"];
+      const SpDefense = pokemonData.base["Sp. Defense"];
+      const Speed = pokemonData.base.Speed;
+      strid = "" + pokemonData.id + "";
+      num = strid.padStart(3, '0');
+
+      element = "";
+      element += "<div class=\"image card pika card_arene vs_vard\">"
+      element += "    <img src=\"./assets/POKEDEX/FILES/carte pokemon/"+num+".jpg\">"
+      element += "</div>"
+      element += "<div class=\"choisir_capacite\">"
+      element += "    <h2 id=\"titre_capacite\">Choisir une capacité</h2>"
+      element += "    <li class=\"capacite_liste\" id=\"conteneur_capacite\">"
+      element += "        <ul onclick=\"capaciteChoisie('num')\" class=\"capacite\">Numéro: "+num+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('HP')\" class=\"capacite\">HP: "+HP+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('Attack')\" class=\"capacite\">Attaque: "+Attack+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('Defense')\" class=\"capacite\">Défense: "+Defense+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('SpAttack')\" class=\"capacite\">Sp. Attaque: "+SpAttack+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('SpDefense')\" class=\"capacite\">Sp. Défense: "+SpDefense+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('Speed')\" class=\"capacite\">Vitesse: "+Speed+"</ul>"
+      element += "    </li>"
+      element += "  <div class=\"coneteneur_buttun_ok\" id=\"coneteneur_buttun_ok\">"
+      element += "    <div class=\"background_button\" id=\"buttun_ok\" onclick=\"attack()\"><button>OK</button></div>"
+      element += "  </div>"
+      element += "</div>"
+      element += "<div id=\"conteneur_carte_enemie\" class=\"image card pika card_arene vs_vard\">"
+      element += "    <img id=\"carte_enemie\" src=\"./assets/images/pokemon_card_back.jpg\">"
+      element += "</div>"
+      element += "</div>"
+
+      popupRulePokemon.style.display = "none";
+      imageChacher = "./assets/POKEDEX/FILES/carte pokemon/"+num+".jpg"
+      contenaireImage.innerHTML = element;
+      animationCard();
+
+      const capacites = document.querySelectorAll(".capacite");
+      capacites.forEach(function(capacite) {
+        capacite.addEventListener('click', function() {
+          // Supprimez la classe 'selected' de tous les éléments
+          capacites.forEach(function(capacite) {
+            capacite.classList.remove('selected');
+          });
+      
+          // Ajoutez la classe 'selected' à l'élément cliqué
+          this.classList.add('selected');
+        });
+      });
+
+      capaciteJoueur.num.push(num)
+      capaciteJoueur.type.push(type)
+      capaciteJoueur.HP.push(HP)
+      capaciteJoueur.Attack.push(Attack)
+      capaciteJoueur.Defense.push(Defense)
+      capaciteJoueur.SpAttack.push(SpAttack)
+      capaciteJoueur.SpDefense.push(SpDefense)
+      capaciteJoueur.Speed.push(Speed)
+
+    });
+
+    appelleAPI("http://127.0.0.1:5001/hazard")
+      .then(pokemonData => {
+        const name = pokemonData.name.french;
+        const type = pokemonData.type.join("/");
+        const HP = pokemonData.base.HP;
+        const Attack = pokemonData.base.Attack;
+        const Defense = pokemonData.base.Defense;
+        const SpAttack = pokemonData.base["Sp. Attack"];
+        const SpDefense = pokemonData.base["Sp. Defense"];
+        const Speed = pokemonData.base.Speed;
+        strid = "" + pokemonData.id + "";
+        num = strid.padStart(3, '0');
+
+        capaciteJoueur.num.push(num)
+        capaciteJoueur.type.push(type)
+        capaciteJoueur.HP.push(HP)
+        capaciteJoueur.Attack.push(Attack)
+        capaciteJoueur.Defense.push(Defense)
+        capaciteJoueur.SpAttack.push(SpAttack)
+        capaciteJoueur.SpDefense.push(SpDefense)
+        capaciteJoueur.Speed.push(Speed)
+        imageChacher = "./assets/POKEDEX/FILES/carte pokemon/"+num+".jpg";
+      })
+
+};
+
+function capaciteChoisie(cap) {
+  capChoisie = cap;
+}
+
+function attack() {
+  capJoueur1 = parseInt(capaciteJoueur[capChoisie][0])
+  capJoueur2 = parseInt(capaciteJoueur[capChoisie][1])
+
+  const conteneurCarteEnemie = document.getElementById("conteneur_carte_enemie");
+  const carteEnemie = document.getElementById("carte_enemie");
+  const titreCapacite = document.getElementById("titre_capacite");
+  conteneurCarteEnemie.style.transition =  "transform 1s";
+  conteneurCarteEnemie.style.transform = "rotatey(720deg)";
+
+  let interval = setInterval(function() {
+    carteEnemie.src = imageChacher
+    clearInterval(interval);
+  }, 500)
+
+  if (capJoueur1 > capJoueur2) {
+    titreCapacite.innerHTML = "<span style=\"color:lightgreen\">GAGNER</span>"
+  }
+  else if (capJoueur1 < capJoueur2) {
+    titreCapacite.innerHTML = "<span style=\"color:red\">PERDU</span>"
+  }
+  else {
+    titreCapacite.innerHTML = "<span style=\"color:orange\">ÉGALITÉ</span>"
+  }
+  
+  num = comparaisionCap(capaciteJoueur.num[0], capaciteJoueur.num[1])
+  //type = comparaisionCap(capaciteJoueur.type[0], capaciteJoueur.type[1])
+  HP = comparaisionCap(capaciteJoueur.HP[0], capaciteJoueur.HP[1])
+  Attack = comparaisionCap(capaciteJoueur.Attack[0], capaciteJoueur.Attack[1])
+  Defense = comparaisionCap(capaciteJoueur.Defense[0], capaciteJoueur.Defense[1])
+  SpAttack = comparaisionCap(capaciteJoueur.SpAttack[0], capaciteJoueur.SpAttack[1])
+  SpDefense = comparaisionCap(capaciteJoueur.SpDefense[0], capaciteJoueur.SpDefense[1])
+  Speed = comparaisionCap(capaciteJoueur.Speed[0], capaciteJoueur.Speed[1])
+  
+
+  const conteneurCapacite = document.getElementById("conteneur_capacite");
+  liste = "";
+  liste += "        <ul onclick=\"capaciteChoisie('num')\" class=\"capacite\">Numéro: "+num+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('HP')\" class=\"capacite\">HP: "+HP+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('Attack')\" class=\"capacite\">Attaque: "+Attack+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('Defense')\" class=\"capacite\">Défense: "+Defense+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('SpAttack')\" class=\"capacite\">Sp. Attaque: "+SpAttack+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('SpDefense')\" class=\"capacite\">Sp. Défense: "+SpDefense+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('Speed')\" class=\"capacite\">Vitesse: "+Speed+"</ul>"
+
+  conteneurCapacite.innerHTML = liste
+
+  const coneteneurButtunOk = document.getElementById("coneteneur_buttun_ok")
+  coneteneurButtunOk.innerHTML = "    <div class=\"background_button\" id=\"buttun_ok\" onclick=\"playPokemon()\"><button>rejouer</button></div>"
+
+  capaciteJoueur = {
+    num : [],
+    type : [],
+    HP : [],
+    Attack : [],
+    Defense : [],
+    SpAttack : [],
+    SpDefense : [],
+    Speed : []
+  }
+}
+
+function comparaisionCap(val1, val2) {
+  retour = "";
+  if (val1 > val2) {
+    retour = "<span style=\"color:lightgreen\">" + val1 + "</span>" + " > " + "<span style=\"color:red\">" + val2 + "</span>"
+  }
+  else if (val1 < val2) {
+    retour = "<span style=\"color:red\">" + val1 + "</span>" + " < " + "<span style=\"color:lightgreen\">" + val2 + "</span>"
+  }
+  else {
+    retour = "<span style=\"color:orange\">" + val1 + " = " + val2 + "</span>"
+  }
+  return retour
 }

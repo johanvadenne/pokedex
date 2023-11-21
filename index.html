@@ -2,9 +2,11 @@
 <html>
 
 <!-- HEAD -->
+
 <head>
     <meta charset="UTF-8">
-    <title>Galerie d'Images</title>
+    <title>Pokedex</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/pokeball-icone.ico" />
 
     <!-- CSS -->
     <link href="assets/css/cardPokemon.css" rel="stylesheet">
@@ -15,13 +17,15 @@
 <!-- HEAD -->
 
 <!-- BODY -->
+
 <body>
-    
+
     <!-- BUTTON -->
     <section class="container_button">
         <div class="background_button" onclick="viewAllPokemon()"><button>Afficher tout</button></div>
         <div class="background_button" onclick="viewPopup()"><button>Rechercher</button></div>
         <div class="background_button"><button onclick="randomPokemon()">aléatoire</button></div>
+        <div class="background_button"><button onclick="rulePokemon()">jouer</button></div>
     </section>
     <!-- BUTTON -->
 
@@ -49,6 +53,25 @@
         <img class="pokeball_icone2" src="./assets/images/pokeball-icone.png">
     </section>
     <!-- POPUP SEARCH POKEMON -->
+
+    <!-- POPUP RULE POKEMON -->
+    <section class="popup" id="popup_rule_pokemon">
+        <img class="pokeball_icone1" src="./assets/images/pokeball-icone.png">
+        <h2 class="titre">RÉGLE DU JEU</h2>
+        <p class="regle">
+            1. une carte piocher au hazard<br>
+            2. choisir une capacité du pokémon (attaque, défense, PV...)<br>
+            3. comparer la capacité choisi avec l'adversaire<br>
+            4. le type ou la capacité supérieure à l'adversaire l'emporte<br>
+            5. le gagnant est celui qui rechoisie la prochaine capacité
+        </p>
+        <div class="buttun_rule">
+            <div class="background_button"><button onclick="annulerRegle()">annuler</button></div>
+            <div class="background_button" id="play"><button onclick="playPokemon()">jouer</button></div>
+        </div>
+        <img class="pokeball_icone2" src="./assets/images/pokeball-icone.png">
+    </section>
+    <!-- POPUP RULE POKEMON -->
 
     <!-- CARD EFFECT -->
     <style class="hover"></style>
