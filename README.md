@@ -16,6 +16,10 @@ Bienvenue sur le PokéDex Viewer, une application web simple qui vous permet d'e
 
 ![Alt text](./assets/images/random.png)
 
+### 4. **Jouer** : 
+
+![Alt text](image.png)
+
 ## Installation
 
 
@@ -62,6 +66,10 @@ Welcome to the PokéDex Viewer, a simple web application that lets you explore t
 ### 3. **Random display** : 
 
 ![Alt text](./assets/images/random.png)
+
+### 4. **Play** : 
+
+![Alt text](image.png)
 
 ## Installation
 

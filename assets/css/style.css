@@ -237,11 +237,11 @@ p {
     right: 7%; 
 }
 
-#popup_rule_pokemon .titre, #popup_rule_pokemon .regle {
+#popup_rule_pokemon .title, #popup_rule_pokemon .rule {
     color: black;
 }
 
-#popup_rule_pokemon .regle {
+#popup_rule_pokemon .rule {
     position: absolute;
     top: 35%;
     left: 20%;
@@ -304,6 +304,7 @@ p {
 }
 
 .choisir_capacite h2  {
+    font-size: 190%;
     text-align: center;
     margin: 5%;
 }
@@ -319,7 +320,6 @@ p {
 
 .coneteneur_buttun_ok {
     position: relative;
-    bottom: -10%;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -334,12 +334,21 @@ p {
     button {
         font-size: 4vh;
     }
+
+    .coneteneur_buttun_ok {
+        bottom: -4%;
+        bottom: -8%;
+    }
 }
 
 @media screen and (max-width: 1400px) {
     /* button */
     button {
         font-size: 3vh;
+    }
+
+    .coneteneur_buttun_ok {
+        bottom: 0%;
     }
 }
 

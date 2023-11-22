@@ -5,17 +5,17 @@ const bodyTable = document.getElementById("body_table");
 const searchBarrePokemon = document.getElementById("search_barre_pokemon");
 const popupSearchPokemon = document.getElementById("popup_search_pokemon");
 const popupRulePokemon = document.getElementById("popup_rule_pokemon");
-var capChoisie;
-var imageChacher;
-var capaciteJoueur = {
-  num : [],
-  type : [],
-  HP : [],
-  Attack : [],
-  Defense : [],
-  SpAttack : [],
-  SpDefense : [],
-  Speed : []
+var capacitySelected;
+var imageHide;
+var capacityPlayer = {
+  num: [],
+  type: [],
+  HP: [],
+  Attack: [],
+  Defense: [],
+  SpAttack: [],
+  SpDefense: [],
+  Speed: []
 }
 
 // FR: effectue une requette GET à une API
@@ -310,17 +310,25 @@ function viewPopup() {
   popupSearchPokemon.style.display = "block";
 }
 
+// FR: affiche popup
+// EN: display popup
 function rulePokemon(jouer = false) {
   popupRulePokemon.style.display = "block";
 }
 
-function annulerRegle() {
+// FR: retir popup
+// EN: remove popup
+function cancelRule() {
   popupRulePokemon.style.display = "none";
 }
 
 
+// FR: commence le jeu
+// EN: start the game
 function playPokemon() {
 
+  // FR: récupère une carte aléatoire pour le premier joueur
+  // EN: picks up a random card for the first player
   appelleAPI("http://127.0.0.1:5001/hazard")
     .then(pokemonData => {
 
@@ -337,18 +345,18 @@ function playPokemon() {
 
       element = "";
       element += "<div class=\"image card pika card_arene vs_vard\">"
-      element += "    <img src=\"./assets/POKEDEX/FILES/carte pokemon/"+num+".jpg\">"
+      element += "    <img src=\"./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg\">"
       element += "</div>"
       element += "<div class=\"choisir_capacite\">"
       element += "    <h2 id=\"titre_capacite\">Choisir une capacité</h2>"
       element += "    <li class=\"capacite_liste\" id=\"conteneur_capacite\">"
-      element += "        <ul onclick=\"capaciteChoisie('num')\" class=\"capacite\">Numéro: "+num+"</ul>"
-      element += "        <ul onclick=\"capaciteChoisie('HP')\" class=\"capacite\">HP: "+HP+"</ul>"
-      element += "        <ul onclick=\"capaciteChoisie('Attack')\" class=\"capacite\">Attaque: "+Attack+"</ul>"
-      element += "        <ul onclick=\"capaciteChoisie('Defense')\" class=\"capacite\">Défense: "+Defense+"</ul>"
-      element += "        <ul onclick=\"capaciteChoisie('SpAttack')\" class=\"capacite\">Sp. Attaque: "+SpAttack+"</ul>"
-      element += "        <ul onclick=\"capaciteChoisie('SpDefense')\" class=\"capacite\">Sp. Défense: "+SpDefense+"</ul>"
-      element += "        <ul onclick=\"capaciteChoisie('Speed')\" class=\"capacite\">Vitesse: "+Speed+"</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('num')\" class=\"capacite\">Numéro: " + num + "</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('HP')\" class=\"capacite\">HP: " + HP + "</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('Attack')\" class=\"capacite\">Attaque: " + Attack + "</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('Defense')\" class=\"capacite\">Défense: " + Defense + "</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('SpAttack')\" class=\"capacite\">Sp. Attaque: " + SpAttack + "</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('SpDefense')\" class=\"capacite\">Sp. Défense: " + SpDefense + "</ul>"
+      element += "        <ul onclick=\"capaciteChoisie('Speed')\" class=\"capacite\">Vitesse: " + Speed + "</ul>"
       element += "    </li>"
       element += "  <div class=\"coneteneur_buttun_ok\" id=\"coneteneur_buttun_ok\">"
       element += "    <div class=\"background_button\" id=\"buttun_ok\" onclick=\"attack()\"><button>OK</button></div>"
@@ -360,79 +368,90 @@ function playPokemon() {
       element += "</div>"
 
       popupRulePokemon.style.display = "none";
-      imageChacher = "./assets/POKEDEX/FILES/carte pokemon/"+num+".jpg"
+      imageHide = "./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg"
       contenaireImage.innerHTML = element;
       animationCard();
 
+      // FR: détecte sélection capacité
+      // EN: detects capacity selection
       const capacites = document.querySelectorAll(".capacite");
-      capacites.forEach(function(capacite) {
-        capacite.addEventListener('click', function() {
-          // Supprimez la classe 'selected' de tous les éléments
-          capacites.forEach(function(capacite) {
+      capacites.forEach(function (capacite) {
+        capacite.addEventListener('click', function () {
+          capacites.forEach(function (capacite) {
             capacite.classList.remove('selected');
           });
-      
-          // Ajoutez la classe 'selected' à l'élément cliqué
+
           this.classList.add('selected');
         });
       });
 
-      capaciteJoueur.num.push(num)
-      capaciteJoueur.type.push(type)
-      capaciteJoueur.HP.push(HP)
-      capaciteJoueur.Attack.push(Attack)
-      capaciteJoueur.Defense.push(Defense)
-      capaciteJoueur.SpAttack.push(SpAttack)
-      capaciteJoueur.SpDefense.push(SpDefense)
-      capaciteJoueur.Speed.push(Speed)
+      capacityPlayer.num.push(num)
+      capacityPlayer.type.push(type)
+      capacityPlayer.HP.push(HP)
+      capacityPlayer.Attack.push(Attack)
+      capacityPlayer.Defense.push(Defense)
+      capacityPlayer.SpAttack.push(SpAttack)
+      capacityPlayer.SpDefense.push(SpDefense)
+      capacityPlayer.Speed.push(Speed)
 
     });
 
-    appelleAPI("http://127.0.0.1:5001/hazard")
-      .then(pokemonData => {
-        const name = pokemonData.name.french;
-        const type = pokemonData.type.join("/");
-        const HP = pokemonData.base.HP;
-        const Attack = pokemonData.base.Attack;
-        const Defense = pokemonData.base.Defense;
-        const SpAttack = pokemonData.base["Sp. Attack"];
-        const SpDefense = pokemonData.base["Sp. Defense"];
-        const Speed = pokemonData.base.Speed;
-        strid = "" + pokemonData.id + "";
-        num = strid.padStart(3, '0');
+  // FR: récupère une carte aléatoire pour le deuxième joueur (bot)
+  // EN: picks up a random card for the second player (bot)
+  appelleAPI("http://127.0.0.1:5001/hazard")
+    .then(pokemonData => {
+      const name = pokemonData.name.french;
+      const type = pokemonData.type.join("/");
+      const HP = pokemonData.base.HP;
+      const Attack = pokemonData.base.Attack;
+      const Defense = pokemonData.base.Defense;
+      const SpAttack = pokemonData.base["Sp. Attack"];
+      const SpDefense = pokemonData.base["Sp. Defense"];
+      const Speed = pokemonData.base.Speed;
+      strid = "" + pokemonData.id + "";
+      num = strid.padStart(3, '0');
 
-        capaciteJoueur.num.push(num)
-        capaciteJoueur.type.push(type)
-        capaciteJoueur.HP.push(HP)
-        capaciteJoueur.Attack.push(Attack)
-        capaciteJoueur.Defense.push(Defense)
-        capaciteJoueur.SpAttack.push(SpAttack)
-        capaciteJoueur.SpDefense.push(SpDefense)
-        capaciteJoueur.Speed.push(Speed)
-        imageChacher = "./assets/POKEDEX/FILES/carte pokemon/"+num+".jpg";
-      })
+      capacityPlayer.num.push(num)
+      capacityPlayer.type.push(type)
+      capacityPlayer.HP.push(HP)
+      capacityPlayer.Attack.push(Attack)
+      capacityPlayer.Defense.push(Defense)
+      capacityPlayer.SpAttack.push(SpAttack)
+      capacityPlayer.SpDefense.push(SpDefense)
+      capacityPlayer.Speed.push(Speed)
+      imageHide = "./assets/POKEDEX/FILES/carte pokemon/" + num + ".jpg";
+    })
 
 };
 
+// FR: sélection capacité
+// EN: capacity selection
 function capaciteChoisie(cap) {
-  capChoisie = cap;
+  capacitySelected = cap;
 }
 
+// FR: comparaison des cartes
+// EN: card comparison
 function attack() {
-  capJoueur1 = parseInt(capaciteJoueur[capChoisie][0])
-  capJoueur2 = parseInt(capaciteJoueur[capChoisie][1])
 
+  if (capacitySelected == null) { return }
+  capJoueur1 = parseInt(capacityPlayer[capacitySelected][0])
+  capJoueur2 = parseInt(capacityPlayer[capacitySelected][1])
+
+  // init
   const conteneurCarteEnemie = document.getElementById("conteneur_carte_enemie");
   const carteEnemie = document.getElementById("carte_enemie");
   const titreCapacite = document.getElementById("titre_capacite");
-  conteneurCarteEnemie.style.transition =  "transform 1s";
-  conteneurCarteEnemie.style.transform = "rotatey(720deg)";
 
-  let interval = setInterval(function() {
-    carteEnemie.src = imageChacher
+  // animation
+  conteneurCarteEnemie.style.transition = "transform 1s";
+  conteneurCarteEnemie.style.transform = "rotatey(720deg)";
+  let interval = setInterval(function () {
+    carteEnemie.src = imageHide
     clearInterval(interval);
   }, 500)
 
+  // titre color
   if (capJoueur1 > capJoueur2) {
     titreCapacite.innerHTML = "<span style=\"color:lightgreen\">GAGNER</span>"
   }
@@ -442,45 +461,51 @@ function attack() {
   else {
     titreCapacite.innerHTML = "<span style=\"color:orange\">ÉGALITÉ</span>"
   }
-  
-  num = comparaisionCap(capaciteJoueur.num[0], capaciteJoueur.num[1])
-  //type = comparaisionCap(capaciteJoueur.type[0], capaciteJoueur.type[1])
-  HP = comparaisionCap(capaciteJoueur.HP[0], capaciteJoueur.HP[1])
-  Attack = comparaisionCap(capaciteJoueur.Attack[0], capaciteJoueur.Attack[1])
-  Defense = comparaisionCap(capaciteJoueur.Defense[0], capaciteJoueur.Defense[1])
-  SpAttack = comparaisionCap(capaciteJoueur.SpAttack[0], capaciteJoueur.SpAttack[1])
-  SpDefense = comparaisionCap(capaciteJoueur.SpDefense[0], capaciteJoueur.SpDefense[1])
-  Speed = comparaisionCap(capaciteJoueur.Speed[0], capaciteJoueur.Speed[1])
-  
+
+  // FR: comparaison des capacité
+  // EN: capacity comparison
+  num = compareCapacity(capacityPlayer.num[0], capacityPlayer.num[1])
+  //type = compareCapacity(capacityPlayer.type[0], capacityPlayer.type[1])
+  HP = compareCapacity(capacityPlayer.HP[0], capacityPlayer.HP[1])
+  Attack = compareCapacity(capacityPlayer.Attack[0], capacityPlayer.Attack[1])
+  Defense = compareCapacity(capacityPlayer.Defense[0], capacityPlayer.Defense[1])
+  SpAttack = compareCapacity(capacityPlayer.SpAttack[0], capacityPlayer.SpAttack[1])
+  SpDefense = compareCapacity(capacityPlayer.SpDefense[0], capacityPlayer.SpDefense[1])
+  Speed = compareCapacity(capacityPlayer.Speed[0], capacityPlayer.Speed[1])
+
 
   const conteneurCapacite = document.getElementById("conteneur_capacite");
   liste = "";
-  liste += "        <ul onclick=\"capaciteChoisie('num')\" class=\"capacite\">Numéro: "+num+"</ul>"
-  liste += "        <ul onclick=\"capaciteChoisie('HP')\" class=\"capacite\">HP: "+HP+"</ul>"
-  liste += "        <ul onclick=\"capaciteChoisie('Attack')\" class=\"capacite\">Attaque: "+Attack+"</ul>"
-  liste += "        <ul onclick=\"capaciteChoisie('Defense')\" class=\"capacite\">Défense: "+Defense+"</ul>"
-  liste += "        <ul onclick=\"capaciteChoisie('SpAttack')\" class=\"capacite\">Sp. Attaque: "+SpAttack+"</ul>"
-  liste += "        <ul onclick=\"capaciteChoisie('SpDefense')\" class=\"capacite\">Sp. Défense: "+SpDefense+"</ul>"
-  liste += "        <ul onclick=\"capaciteChoisie('Speed')\" class=\"capacite\">Vitesse: "+Speed+"</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('num')\" class=\"capacite\">Numéro: " + num + "</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('HP')\" class=\"capacite\">HP: " + HP + "</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('Attack')\" class=\"capacite\">Attaque: " + Attack + "</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('Defense')\" class=\"capacite\">Défense: " + Defense + "</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('SpAttack')\" class=\"capacite\">Sp. Attaque: " + SpAttack + "</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('SpDefense')\" class=\"capacite\">Sp. Défense: " + SpDefense + "</ul>"
+  liste += "        <ul onclick=\"capaciteChoisie('Speed')\" class=\"capacite\">Vitesse: " + Speed + "</ul>"
 
   conteneurCapacite.innerHTML = liste
 
   const coneteneurButtunOk = document.getElementById("coneteneur_buttun_ok")
   coneteneurButtunOk.innerHTML = "    <div class=\"background_button\" id=\"buttun_ok\" onclick=\"playPokemon()\"><button>rejouer</button></div>"
 
-  capaciteJoueur = {
-    num : [],
-    type : [],
-    HP : [],
-    Attack : [],
-    Defense : [],
-    SpAttack : [],
-    SpDefense : [],
-    Speed : []
+  // reset
+  capacityPlayer = {
+    num: [],
+    type: [],
+    HP: [],
+    Attack: [],
+    Defense: [],
+    SpAttack: [],
+    SpDefense: [],
+    Speed: []
   }
+  capacitySelected = null;
 }
 
-function comparaisionCap(val1, val2) {
+// FR: renvoie la comparaison des capacités avec une mise en forme
+// EN: refers to the comparison of capacities with a form factor
+function compareCapacity(val1, val2) {
   retour = "";
   if (val1 > val2) {
     retour = "<span style=\"color:lightgreen\">" + val1 + "</span>" + " > " + "<span style=\"color:red\">" + val2 + "</span>"
