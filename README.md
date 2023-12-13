@@ -18,7 +18,7 @@ Bienvenue sur le PokéDex Viewer, une application web simple qui vous permet d'e
 
 ### 4. **Jouer** : 
 
-![Alt text](image.png)
+![Alt text](./assets/images/play.png)
 
 ## Installation
 
