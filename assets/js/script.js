@@ -46,7 +46,7 @@ function viewAllPokemon() {
     } else {
         // FR: Si aucun élément n'est enregistré, effectue une requête API
         // EN: If no elements are registered, perform an API request
-        appelleAPI("http://172.16.197.254:5001/")
+        appelleAPI("http://127.0.0.1:5001/")
             .then(pokemonData => {
 
                 // FR: Les données des Pokémon sont stockées dans pokemonData
@@ -181,14 +181,14 @@ function animationCard() {
 // FR: affiche un pokémon aléatoire
 // EN: display random pokemon
 function randomPokemon() {
-    appelleAPI("http://172.16.197.254:5001/hazard")
+    appelleAPI("http://127.0.0.1:5001/hazard")
         .then(pokemonData => displayPokemon(pokemonData))
 }
 
 // FR: affiche un pokémon par nom
 // EN: display pokemon by name
 function displayPokemonName(name, recherche = false) {
-    appelleAPI("http://172.16.197.254:5001/pokemon?pokemon=" + name + "")
+    appelleAPI("http://127.0.0.1:5001/pokemon?pokemon=" + name + "")
         .then(pokemonData => {
             if (recherche) {
                 popupSearchPokemon.style.display = "none";
@@ -263,7 +263,7 @@ searchBarrePokemon.addEventListener('input', function() {
     if (jsonEnreg != null) {
         recherchePokemon(pokemonRechercher);
     } else {
-        appelleAPI("http://172.16.197.254:5001/")
+        appelleAPI("http://127.0.0.1:5001/")
             .then(pokemonData => {
                 jsonEnreg = pokemonData;
                 recherchePokemon(pokemonRechercher);
@@ -327,7 +327,7 @@ function playPokemon() {
 
     // FR: récupère une carte aléatoire pour le premier joueur
     // EN: picks up a random card for the first player
-    appelleAPI("http://172.16.197.254:5001/hazard")
+    appelleAPI("http://127.0.0.1:5001/hazard")
         .then(pokemonData => {
 
             const name = pokemonData.name.french;
@@ -396,7 +396,7 @@ function playPokemon() {
 
     // FR: récupère une carte aléatoire pour le deuxième joueur (bot)
     // EN: picks up a random card for the second player (bot)
-    appelleAPI("http://172.16.197.254:5001/hazard")
+    appelleAPI("http://127.0.0.1:5001/hazard")
         .then(pokemonData => {
             const name = pokemonData.name.french;
             const type = pokemonData.type.join("/");
