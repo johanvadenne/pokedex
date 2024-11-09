@@ -23,17 +23,13 @@ Bienvenue sur le PokéDex Viewer, une application web simple qui vous permet d'e
 ## Installation
 
 
-1. npm install fs
+1. npm install
 
-2. npm install express
+2. npm start
 
-3. npm install cors
+3. Ouvrez votre navigateur et accédez à http://127.0.0.1:5001 pour l'API explorer le PokéDex Viewer.
 
-4. node .\server_pokedex.js
-
-5. Ouvrez votre navigateur et accédez à http://127.0.0.1:5001 pour l'API explorer le PokéDex Viewer.
-
-6. Ouvrez votre index.html avec votre navigateur pour explorer le PokéDex Viewer.
+4. Ouvrez votre index.html avec votre navigateur pour explorer le PokéDex Viewer.
 
 ## Annexe
 
